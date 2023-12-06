@@ -28,6 +28,7 @@ async function run() {
             const result = await cursor.toArray()
             res.send(result)
         })
+        //  
         app.get('/products/cart', async (req, res) => {
             const ids = req.query.ids;
             const idsArray = ids.split(',');
@@ -37,6 +38,8 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result);
         });
+
+        // single product
         app.get('/product/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
@@ -44,15 +47,16 @@ async function run() {
             res.send(result)
         })
 
+        // insert database
         app.post('/products', async (req, res) => {
             const product = req.body;
             const result = await productsCollection.insertOne(product);
             res.send(result)
         })
 
+        // update product
         app.put('/product/:id', async (req, res) => {
             const id = req.params.id;
-            console.log(id)
             const product = req.body;
             const filter = { _id: new ObjectId(id) }
             const options = { upsert: true }
@@ -70,6 +74,7 @@ async function run() {
             res.send(result)
         })
 
+        // delete product
         app.delete('/product/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
